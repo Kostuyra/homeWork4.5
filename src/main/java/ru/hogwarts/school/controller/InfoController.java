@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.hogwarts.school.service.InfoService;
 
 @RestController
-@RequestMapping("getPort")
+@RequestMapping("info")
 public class InfoController {
     private final InfoService infoService;
 
@@ -15,8 +15,14 @@ public class InfoController {
         this.infoService = infoService;
     }
 
-    @GetMapping
+    @GetMapping("/getPort")
     public ResponseEntity<String> getPort() {
         return ResponseEntity.ok(infoService.getPort());
     }
+
+    @GetMapping("/getLong")
+    public ResponseEntity<Long> getLong() {
+        return ResponseEntity.ok(infoService.getLong());
+    }
+
 }

@@ -130,4 +130,13 @@ class FacultyControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
+    @Test
+    void getLongestFacultyNameTest() throws Exception {
+        when(facultyRepository.findAll()).thenReturn(ALLFACULTIES);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/faculty/longest")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 }

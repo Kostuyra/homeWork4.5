@@ -9,12 +9,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.bind.annotation.GetMapping;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.StudentService;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -92,7 +95,6 @@ class StudentControllerTest {
     }
 
 
-
     @Test
     void getAllStudents() throws Exception {
         when(studentRepository.findAll()).thenReturn(ALLSTUDENTS);
@@ -115,6 +117,7 @@ class StudentControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(STUDENT_LIST2)));
     }
+
     @Test
     void testGetStudentsEquallyAge() throws Exception {
         when(studentRepository.findStudentsByAge(20)).thenReturn(STUDENT_LIST);
@@ -166,5 +169,24 @@ class StudentControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(STUDENT_LIST)));
+    }
+
+    @Test
+    void getNameStartWithA() throws Exception {
+        when(studentRepository.findAll()).thenReturn(ALLSTUDENTS);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student/startNameA"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(mapper.writeValueAsString(LIST_STUDENT_NAME)));
+    }
+
+    @Test
+    void getAverageAgeStudents() throws Exception {
+        when(studentRepository.findAll()).thenReturn(STUDENT_LIST);
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student/avgAge")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 }
