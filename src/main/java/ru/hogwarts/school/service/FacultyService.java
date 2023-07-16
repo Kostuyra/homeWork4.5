@@ -7,6 +7,7 @@ import ru.hogwarts.school.Exception.NotFoundException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,5 +64,13 @@ public class FacultyService {
         logger.info("Was invoked method for get find faculties");
         logger.debug("Name = " + name + ", color = " + color);
         return facultyRepository.findFacultiesByNameIgnoreCaseOrColorIgnoreCase(name, color);
+    }
+
+    public String getLongestFacultyName(){
+        return facultyRepository.findAll()
+                .stream()
+                .map(f -> f.getName())
+                .max(Comparator.comparingInt(String::length)).orElse("")
+                .toString();
     }
 }

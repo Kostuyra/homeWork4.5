@@ -77,10 +77,20 @@ class StudentServiceTest {
         Mockito.when(studentRepository.getAvgAgeStudents()).thenReturn(20f);
         assertEquals(20f, out.getAvgAgeStudents());
     }
+    @Test
+    void getAverageAgeStudents() {
+        Mockito.when(studentRepository.findAll()).thenReturn(STUDENT_LIST);
+        assertEquals(20, out.getAverageAgeStudents());
+    }
 
     @Test
     void getLastFive() {
         Mockito.when(studentRepository.getLastFive()).thenReturn(ALLSTUDENTS);
         assertEquals(ALLSTUDENTS, out.getLastFive());
+    }
+    @Test
+    void getAllStudentsWithNameStartedATest(){
+        Mockito.when(studentRepository.findAll()).thenReturn(ALLSTUDENTS);
+        assertEquals(LIST_STUDENT_NAME, out.getAllStudentsWithNameStartedA());
     }
 }

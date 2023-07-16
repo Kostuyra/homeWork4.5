@@ -62,4 +62,10 @@ class FacultyServiceTest {
         Mockito.when(facultyRepository.findAll()).thenReturn(ALLFACULTIES);
         assertEquals(ALLFACULTIES, out.getAll());
     }
+    @Test
+    void getLongestFacultyNameTest(){
+        Mockito.when(facultyRepository.findAll()).thenReturn(ALLFACULTIES);
+        assertEquals("FacultyName44", out.getLongestFacultyName());
+    }
+
 }

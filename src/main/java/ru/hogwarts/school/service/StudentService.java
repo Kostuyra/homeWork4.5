@@ -39,7 +39,7 @@ public class StudentService {
     public Student updateStudent(Student student) {
         logger.info("Was invoked method for update student");
         if (studentRepository.findById(student.getId()) == null) {
-            logger.error("There is not student  = " + student );
+            logger.error("There is not student  = " + student);
             throw new NotFoundException();
         }
         studentRepository.save(student);
@@ -86,11 +86,30 @@ public class StudentService {
         logger.info("Was invoked method for get average age students");
         return studentRepository.getAvgAgeStudents();
     }
+    public Double getAverageAgeStudents(){
+        logger.info("Was invoked method for get average age students");
+        return studentRepository.findAll().stream().mapToDouble(s ->  s.getAge()).average().orElseThrow();
+    }
 
 
     public List<Student> getLastFive() {
         logger.info("Was invoked method for get last five students");
         return studentRepository.getLastFive();
     }
+
+    public List<String> getAllStudentsWithNameStartedA() {
+        logger.info("Was invoked method for get all students with name started A");
+      return   studentRepository
+                .findAll()
+                .stream()
+                .filter(s -> s.getName().startsWith("A"))
+                .map(s -> s.getName().toUpperCase())
+                .sorted()
+                .collect(Collectors.toList());
+
+
+    }
+
+
 
 }
